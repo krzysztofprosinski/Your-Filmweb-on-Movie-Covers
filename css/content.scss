@@ -1,0 +1,364 @@
+$bookmark-c: #ffc200 !default;
+
+/* obejrzane i ocenione, bez "chce zobaczyc" */
+.yfomc-viewed {
+  .item-link,
+  .ptrack-content {
+    opacity: 0.15;
+    filter: grayscale(60%);
+    transition: opacity 0.5s ease;
+  }
+
+  &:hover {
+    .item-link,
+    .ptrack-content {
+      opacity: 1;
+      filter: grayscale(0%);
+    }
+  }
+
+  div.nfw_score {
+    opacity: 0.4;
+  }
+}
+
+/* ogolne */
+.yfomc-i {
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2;
+  fill: none;
+  stroke: currentcolor;
+  transition: fill 0.5s ease, stroke 0.5s ease;
+}
+.yfomc-container {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 1;
+  pointer-events: none;
+  width: 100%;
+  height: 100%;
+}
+.is-bob-open div.yfomc-container,
+.slider-item[style*="z-index: 4"] .yfomc-container {
+  display: none;
+  opacity: 0;
+}
+
+/* user rate */
+.yfomc-user-rate-container {
+  position: absolute;
+  top: -1px;
+  right: -2px;
+  height: auto;
+  width: 42px;
+
+  font-size: 18px;
+  line-height: 1.2;
+
+  text-align: center;
+  vertical-align: center;
+
+  color: #2d2d2d; /* F5C809 */
+  pointer-events: none;
+
+  opacity: 0.9;
+  animation: fade-in-09 0.4s ease forwards;
+
+  .yfomc-i-bookmark {
+    z-index: 0;
+    height: auto;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    right: 0;
+    fill: $bookmark-c;
+    stroke: $bookmark-c;
+  }
+}
+.yfomc-user-rate {
+  position: relative;
+  z-index: 2;
+  margin-top: 5px;
+  margin-left: 0;
+  text-shadow: none;
+  color: #000;
+  font-weight: 500;
+  letter-spacing: -0.07em;
+}
+.yfomc-favorite {
+  z-index: 1;
+  height: auto;
+  position: absolute;
+  top: 7px;
+  right: 12px;
+  width: 18px;
+
+  .yfomc-user-rate ~ & {
+    width: 17px;
+    right: 27px;
+  }
+}
+.yfomc-i-heart {
+  height: auto;
+  width: 100%;
+  fill: #ff6e7d;
+  stroke: #f36e6e;
+}
+.yfomc-want-to-see {
+  position: absolute;
+  z-index: -1;
+  height: auto;
+  width: 38px;
+  right: 0;
+  top: 0;
+  background: rgba(0, 0, 0, 0.3);
+  padding: 0 3px 0 6px;
+  border-radius: 0 0 0 50%;
+  // border-bottom-left-radius: 15px;
+
+  opacity: 0.92;
+  animation: fade-in-09 0.4s ease forwards;
+
+  .yfomc-user-rate-container ~ & {
+    opacity: 0.9;
+    margin-right: 34px;
+  }
+}
+.yfomc-i-eye {
+  height: auto;
+  width: 100%;
+  fill: none;
+  margin-bottom: -1px;
+  stroke: $bookmark-c;
+
+  > path {
+    fill: $bookmark-c;
+    stroke: $bookmark-c;
+  }
+  circle:first-of-type {
+    fill: #000;
+    stroke: $bookmark-c;
+  }
+  circle:nth-of-type(2) {
+    fill: $bookmark-c;
+    stroke: $bookmark-c;
+  }
+}
+
+/* refresh filmweb data */
+.pinning-header .secondary-navigation .nav-element.yfomc-refresh-container:not(:last-child),
+.pinning-header .secondary-navigation .nav-element.yfomc-sh-btn:not(:last-child) {
+  margin-right: 12px;
+}
+.yfomc-refresh,
+.yfomc-sh-btn {
+  cursor: pointer;
+}
+.yfomc-refresh {
+  margin: 0;
+  padding: 0;
+}
+.yfomc-refresh-icon {
+  float: left;
+  margin-right: 4px;
+  margin-top: 1px;
+}
+.yfomc-sh-icon,
+.yfomc-refresh-icon {
+  float: left;
+  margin-top: -5px;
+  margin-right: 8px;
+
+  svg {
+    height: 20px;
+    width: 20px;
+  }
+}
+.yfomc-sh-hidden .yfomc-sh-icon:before {
+  opacity: 0.4;
+}
+.yfomc-refresh-txt,
+.yfomc-sh-txt {
+  line-height: 1.2;
+}
+
+.is-bob-open div.yfomc-score,
+.slider-item[style^="z-index"] .yfomc-score {
+  display: none;
+  opacity: 0;
+}
+
+span.yfomc-score-bob {
+  font-size: 12px;
+  margin-left: 10px;
+  padding: 2px 5px;
+
+  text-align: center;
+
+  background: rgba(100, 100, 100, 0.7);
+  border: 2px solid #666;
+  color: #ff9;
+  font-weight: bold;
+  text-align: center;
+  border-radius: 5px;
+}
+
+div.yfomc-score-jaw {
+  font-size: 14px;
+  padding: 2px 5px;
+  clear: both;
+  margin: 5px 0;
+  background: rgba(100, 100, 100, 0.4);
+  border: 2px solid #666;
+  color: #ff9;
+  font-weight: bold;
+  text-align: center;
+  border-radius: 5px;
+}
+
+div.yfomc-score-bob {
+  pointer-events: none;
+  position: absolute;
+  left: 5px;
+  top: 0;
+  z-index: 990;
+  font-size: 14px;
+  padding: 2px 5px;
+  clear: both;
+  margin: 5px 0;
+  background: rgba(100, 100, 100, 0.4);
+  border: 2px solid #666;
+  color: #ff9;
+  font-weight: bold;
+  text-align: center;
+  border-radius: 5px;
+}
+
+div.yfomc-related {
+  font-size: 14px;
+  float: right;
+}
+
+a.yfomc-jaw-link {
+  color: #ff9;
+  display: inline-block;
+  pointer-events: auto;
+  z-index: 999;
+  cursor: context-menu;
+}
+
+img.yfomc-wrong {
+  float: right;
+  cursor: pointer;
+}
+
+img.yfomc-button {
+  cursor: pointer;
+}
+
+#yfomc-report-a {
+  position: absolute;
+  width: 0px;
+  height: 0px;
+}
+
+#yfomc-report {
+  position: relative;
+  overflow: visible;
+  float: right;
+  z-index: 9000;
+  bottom: 0px;
+  width: 150px;
+  left: 400px;
+  border: 2px solid grey;
+  padding: 10px;
+  background: rgba(200, 200, 200, 0.9);
+  display: none;
+  border-radius: 5px;
+  text-align: right;
+  size: 12px;
+  color: #333;
+}
+
+/* Animations */
+@keyframes fade-in-09 {
+  from {
+    opacity: 0;
+    // pointer-events: none;
+  }
+  to {
+    opacity: 0.9;
+    // pointer-events: all;
+  }
+}
+
+/* Tylko HBO GO */
+.yfomc-navbar-hbogo {
+  float: left;
+
+  &.main-menu {
+    margin-right: 20px;
+  }
+
+  .yfomc-nav-a {
+    padding-bottom: 12px;
+    padding-top: 8px;
+  }
+
+  .yfomc-nav-txt {
+    font-size: 14px;
+  }
+  .yfomc-sh-txt {
+    width: 108px;
+  }
+  .yfomc-refresh-txt {
+    width: 98px;
+  }
+
+  .yfomc-i-close {
+    opacity: 0.5;
+  }
+  .main-menu-item:not(:hover) .yfomc-i-checkmark {
+    stroke: #0091ea;
+  }
+}
+
+/* HBO GO - dodatkowe style dla reszty strony */
+.shelf-item div.imdb,
+.grid-item span.imdb {
+  top: auto;
+  bottom: 0;
+  left: 0;
+  right: auto;
+
+  .rate {
+    border-radius: 1px;
+
+    &:after {
+      border-radius: 1px 1px 1px 4px;
+    }
+  }
+}
+.imdb + .ribbon-last.hidden {
+  display: inline-block !important;
+  visibility: visible;
+}
+.module.grid-module {
+  .grid-html {
+    height: auto !important;
+
+    &:after {
+      content: '';
+      display: block;
+      clear: both;
+    }
+  }
+  .grid-item {
+    position: relative !important;
+    float: left;
+    left: 0 !important;
+    top: 0 !important;
+  }
+}
