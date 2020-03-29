@@ -11,7 +11,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     //     // console.log('id: ' + request.id);
     //     // console.log('value: ' + value);
     //     // if (typeof value.id.n === 'undefined' || value.id.n == '') getNetflixID(value);
-    //     // if (typeof value.id.h === 'undefined' || value.id.h == '') yfomcGetHbogoID(value, request.id);
+    //     // if (typeof value.id.h === 'undefined' || value.id.h == '') getHbogoID(value, request.id);
     //   }, time)
     //   time += 200;
     // });

@@ -1,6 +1,6 @@
 {
   "name": "Your filmweb on Netflix & HBO GO",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Your filmweb.pl ratings for Netflix & HBO GO",
   "permissions": [
     "https://www.netflix.com/",

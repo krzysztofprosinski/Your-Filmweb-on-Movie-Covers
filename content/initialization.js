@@ -7,15 +7,21 @@
 //   console.log("sync SAVED!");
 // });
 
-var filmwebLogin = 'Kelen91';
+// var filmwebLogin = 'Kelen91';
 // var rodzajeList = ["films", "serials", "wantToSee"]
-var rodzajeList = ["films"];
+// var rodzajeList = ["films"];
 //var rodzajeList = ["serials"];
 //var rodzajeList = ["wantToSee"];
 
-var listsAll = rodzajeList.length;
+// var listsAll = rodzajeList.length;
+
+
+
+// TO DO: Pobrać i wypełnić "sync" i ostatnie daty
 createRefreshBtn();
 createShowHideBtn(true);
+
+
 
 //var NazwaProfilu = 'Kelen91';
 //listaFilmowUpdate(NazwaProfilu);

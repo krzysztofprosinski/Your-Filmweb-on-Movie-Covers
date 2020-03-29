@@ -1,0 +1,105 @@
+/* ogolne */
+.yfomc-i {
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2;
+  fill: none;
+  stroke: currentcolor;
+  -webkit-transition: fill 0.5s ease, stroke 0.5s ease;
+  transition: fill 0.5s ease, stroke 0.5s ease;
+}
+
+.yfomc-i-bookmark {
+  stroke-width: 1;
+  stroke: url(#my-cool-gradient) #FCD303;
+}
+
+/* user rate */
+.yfomc-user-rate {
+  position: relative;
+  z-index: 2;
+  margin-top: 5px;
+  margin-left: 0;
+  text-shadow: none;
+  color: #000;
+  font-weight: 500;
+  letter-spacing: -0.07em;
+}
+
+.yfomc-favorite {
+  z-index: 1;
+  height: auto;
+  position: absolute;
+  top: 33px;
+  left: 5px;
+  width: 25px;
+}
+
+.yfomc-i-heart {
+  height: auto;
+  width: 100%;
+  fill: #ff6e7d;
+  stroke: #f36e6e;
+}
+
+.yfomc-want-to-see {
+  position: absolute;
+  z-index: -1;
+  height: auto;
+  width: 38px;
+  right: 0;
+  top: 0;
+  background: rgba(0, 0, 0, 0.3);
+  padding: 0 3px 0 6px;
+  border-radius: 0 0 0 50%;
+  opacity: 0.92;
+  -webkit-animation: fade-in-09 0.4s ease forwards;
+          animation: fade-in-09 0.4s ease forwards;
+}
+
+.yfomc-user-rate-container ~ .yfomc-want-to-see {
+  opacity: 0.9;
+  margin-right: 34px;
+}
+
+.yfomc-i-eye {
+  height: auto;
+  width: 100%;
+  fill: none;
+  margin-bottom: -1px;
+  stroke: #ffc200;
+}
+
+.yfomc-i-eye > path {
+  fill: #ffc200;
+  stroke: #ffc200;
+}
+
+.yfomc-i-eye circle:first-of-type {
+  fill: #000;
+  stroke: #ffc200;
+}
+
+.yfomc-i-eye circle:nth-of-type(2) {
+  fill: #ffc200;
+  stroke: #ffc200;
+}
+
+/* Animations */
+@-webkit-keyframes fade-in-09 {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 0.9;
+  }
+}
+@keyframes fade-in-09 {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 0.9;
+  }
+}
+/*# sourceMappingURL=options.css.map */

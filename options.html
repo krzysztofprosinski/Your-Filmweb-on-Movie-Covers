@@ -1,11 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>Your-Filmweb-on-Movie-Covers</title>
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/options.css" rel="stylesheet">
 </head>
+
 <body>
-  
+  <div class="container">
+    <div class="py-5 text-center">
+      <!-- <img class="d-block mx-auto mb-4" src="images/get_started128.png" width="72" height="72"> -->
+      <svg style="width:1px;height:1px;position:absolute;" aria-hidden="true" focusable="false">
+        <linearGradient id="my-cool-gradient" x2="1" y2="1">
+          <stop offset="0%" stop-color="#FCD303" />
+          <stop offset="100%" stop-color="#DD9C27" />
+        </linearGradient>
+      </svg>
+      <div style="position:relative; height:100px; width:100px; margin: 0 auto;">
+        <svg class="yfomc-i yfomc-i-bookmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"
+          style="fill: url(#my-cool-gradient) #FCD303;" aria-hidden="true" focusable="false">
+          <path d="M6 2 L26 2 26 30 16 20 6 30 Z" />\
+        </svg>
+        <svg id="i-star" viewBox="0 0 32 32" fill="white" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" style="position:  absolute; left: 27.9%; height: 44%; top: 14.4%; stroke: white;">
+          <path d="M16 2 L20 12 30 12 22 19 25 30 16 23 7 30 10 19 2 12 12 12 Z" />
+        </svg>
+        <div class="yfomc-favorite"><svg class="yfomc-i yfomc-i-heart" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M4 16 C1 12 2 6 7 4 12 2 15 6 16 8 17 6 21 2 26 4 31 6 31 12 28 16 25 20 16 28 16 28 16 28 7 20 4 16 Z" /></svg></div>
+      </div>
+      <h2>Your Filmweb on Movie Covers</h2>
+      <p class="lead">Your filmweb.pl ratings for Netflix & HBO GO</p>
+    </div>
+
+
+    <div class="form-group">
+      <label for="login">Login filmweb.pl</label>
+      <input type="text" class="form-control" id="login">
+      <small id="emailHelp" class="form-text text-muted">Upewnij sie, że jesteś zalogowany.</small>
+    </div>
+
+    <hr>
+    <h3>Serwisy do synchronizacji</h3>
+    <small class="form-text text-muted">(Każdy kolejny spowalnia synchronizację)</small>
+    <div class="form-group form-check">
+      <input type="checkbox" class="form-check-input" id="serviceNetflix">
+      <label class="form-check-label" for="serviceNetflix">Netflix</label>
+    </div>
+    <div class="form-group form-check">
+      <input type="checkbox" class="form-check-input" id="serviceHbogo">
+      <label class="form-check-label" for="serviceHbogo">HBO HO</label>
+    </div>
+
+    <hr>
+
+    <div class="form-group form-check">
+      <input type="checkbox" class="form-check-input" id="syncFilms">
+      <label class="form-check-label" for="syncFilms">Oceny - filmy</label>
+    </div>
+    <div class="form-group form-check">
+      <input type="checkbox" class="form-check-input" id="syncSerials">
+      <label class="form-check-label" for="syncSerials">Oceny - seriale</label>
+    </div>
+    <div class="form-group form-check">
+      <input type="checkbox" class="form-check-input" id="syncWantToSee">
+      <label class="form-check-label" for="syncWantToSee">Chcę zobaczyć</label>
+    </div>
+
+    <!-- włącznik odświeżania w interface'ie strony a nie tylko w rozwijanym czymś po kliknięciu na ikonę rozszerzenia -->
+    <div id="status"></div>
+    <button id="save" class="btn btn-primary">Zapisz</button>
+
+  </div>
+
+  <script src="js/options.js"></script>
 </body>
+
 </html>

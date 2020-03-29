@@ -9,7 +9,8 @@ function yfomcGetInfo(data) {
     if (infoJSON.f == "0" || infoJSON.f == undefined) infoJSON.f = '';
     if (infoJSON.w == "0" || infoJSON.w == undefined) infoJSON.w = '';
     return infoJSON;
-  }
+
+  } else return false;
 }
 
 function yfomcPlaceScore(titleName, idService, filmBox) {
@@ -36,9 +37,9 @@ function yfomcPlaceScore(titleName, idService, filmBox) {
         let idFilmweb = data[prefix + idService];
         console.log('%c bbbbbbbbbbbbbbbb ', 'color: green');
         if (idFilmweb) {
-          
+
           console.log('%c asdasaaaaaaaaaaaaaaaaa ', 'color: green');
-          
+
           let idFilmwebWithPrefix = getPrefix('filmweb') + idFilmweb
           chrome.storage.local.get(idFilmwebWithPrefix, function (dataF) {
             if (JSON.stringify(dataF[idFilmwebWithPrefix]) != '{}') {
@@ -83,12 +84,15 @@ function yfomcPlaceScore(titleName, idService, filmBox) {
  * Listens to changes in data storege and changes information about ratings
  */
 chrome.storage.onChanged.addListener(function (changes, namespace) {
-  var data, yfomcScore;
+  let data, yfomcScore;
   for (key in changes) {
     data = (changes[key].newValue !== undefined) ? changes[key].newValue : changes[key].oldValue;
-    yfomcScore = yfomcGetInfo(data).ur.toLocaleString();
-    $(".yfomc-id-" + key).html("<div class='yfomc-user-rate-container'><div class='yfomc-user-rate'>" + yfomcScore + "</div></div>");
-    $(".yfomc-id-" + key).closest('.slider-item').addClass('yfomc-viewed');
+    let info = yfomcGetInfo(data);
+    if (!$.isEmptyObject(info) && !$.isEmptyObject(info.ur)) {
+      yfomcScore = info.ur.toLocaleString();
+      $(".yfomc-id-" + key).html("<div class='yfomc-user-rate-container'><div class='yfomc-user-rate'>" + yfomcScore + "</div></div>");
+      $(".yfomc-id-" + key).closest('.slider-item').addClass('yfomc-viewed');
+    }
   }
 });
 
@@ -97,28 +101,28 @@ chrome.storage.onChanged.addListener(function (changes, namespace) {
 //var yfomcScoreSource = 'filmweb';
 // var yfomcReadStore = "yfomcScoreSource";
 // chrome.storage.local.get(yfomcReadStore, function (data) {
-  //    if((data !== undefined) && (data[yfomcReadStore] !== undefined)) yfomcScoreSource = data[yfomcReadStore];
+//    if((data !== undefined) && (data[yfomcReadStore] !== undefined)) yfomcScoreSource = data[yfomcReadStore];
 
-  // For all displayed titles
-  if (service == 'netflix') {
-    $('.slider-item').each(function () {
-      titleName = $(this).find('.fallback-text:first').text();  // Gets the title's name
-      var href = $(this).find('a').attr('href');
-      idNetflix = (href !== undefined) ? href.replace(/\/watch\/([0-9]*).*/, "$1") : false; // Gets the title's netflix ID
-      if (idNetflix) {
-        yfomcPlaceScore(titleName, idNetflix, $(this));
-      }
-    });
-  } else if (service == 'hbogo') {
-    $('.shelf-item, .grid-item').each(function () {
-      titleName = $(this).find('.title').text();  // Gets the title's name
-      idService = $(this).attr('data-external-id'); // Gets the title's netflix ID
-      // console.log(idService);
-      if (idService) {
-        yfomcPlaceScore(titleName, idService, $(this));
-      }
-    });
-  }
+// For all displayed titles
+if (service == 'netflix') {
+  $('.slider-item').each(function () {
+    titleName = $(this).find('.fallback-text:first').text();  // Gets the title's name
+    var href = $(this).find('a').attr('href');
+    idNetflix = (href !== undefined) ? href.replace(/\/watch\/([0-9]*).*/, "$1") : false; // Gets the title's netflix ID
+    if (idNetflix) {
+      yfomcPlaceScore(titleName, idNetflix, $(this));
+    }
+  });
+} else if (service == 'hbogo') {
+  $('.shelf-item, .grid-item').each(function () {
+    titleName = $(this).find('.title').text();  // Gets the title's name
+    idService = $(this).attr('data-external-id'); // Gets the title's netflix ID
+    // console.log(idService);
+    if (idService) {
+      yfomcPlaceScore(titleName, idService, $(this));
+    }
+  });
+}
 
 
 // Allows to monitor changes in DOM.

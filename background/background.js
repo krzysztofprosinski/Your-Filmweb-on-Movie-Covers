@@ -66,7 +66,7 @@ function getNetflixID(request, id) {
   if (serviceStatus.n.busy) {
     window.setTimeout(function () {
       getNetflixID(request, id)
-    }, getRandomInt(1, 100));
+    }, getRandomInt(50, 300));
 
   } else {
     serviceStatus.n.busy = true;
@@ -90,24 +90,24 @@ function getNetflixID(request, id) {
 
             //            }
           }
-        }).fail(function (e) { if (e.status == 403) { serviceStatus.n.stop = true; console.log('%c Netflix STOP', 'color: darkgreen'); } });
+        });
         //      if (znaleziono) console.log("Znaleziony: "+ znaleziono);
         if (notFound) {
           console.log("Nie znaleziono: " + request.t);
           serviceStatus.n.busy = false;
         }
-      });
-    }, getRandomInt(100, 1000));
+      }).fail(function (e) { if (e.status == 403) { serviceStatus.n.stop = true; console.log('%c Netflix STOP', 'color: darkgreen'); } });
+    }, getRandomInt(200, 1000));
   }
 }
 
-function yfomcGetHbogoID(request, id) {
+function getHbogoID(request, id) {
   if (serviceStatus.h.stop) return;
 
   if (serviceStatus.h.busy) {
     window.setTimeout(function () {
-      yfomcGetHbogoID(request, id)
-    }, getRandomInt(1, 100));
+      getHbogoID(request, id)
+    }, getRandomInt(50, 200));
 
   } else {
     serviceStatus.h.busy = true;
@@ -128,14 +128,14 @@ function yfomcGetHbogoID(request, id) {
               && ((request.type == "f" && val.AdditionalName != "Serial") || (request.type == "s" && val.AdditionalName == "Serial"))
             ) {
               yfomcSaveData(request, id, val.ExternalId, 'hbogo');
-              console.log('%c Znaleziony: [' + id + ']' + request.t, 'color: darkgreen');
+              console.log('%c Znaleziony: [' + id + '] ' + request.t, 'color: darkgreen');
             }
             else console.log("Nie znaleziono: " + request.t);
           });
         }
         serviceStatus.h.busy = false;
       });
-    }, getRandomInt(10, 500));
+    }, getRandomInt(50, 700));
   }
 }
 

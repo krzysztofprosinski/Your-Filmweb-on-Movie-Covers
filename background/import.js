@@ -11,7 +11,7 @@ var serviceStatus = {
     'busy': false,
   },
   'n': {
-    'stop': true,
+    'stop': false,
     'busy': false,
   }
 }
@@ -22,29 +22,25 @@ var serviceStatus = {
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   if (request.type == "listaFilmowUpdate") {
     console.log('--------------- listaFilmowUpdate');
-    // let rodzajeList = ["films", "serials", "wantToSee"]
-    let rodzajeList = ["films"]
-    listaFilmowUpdate(rodzajeList)
+    listaFilmowUpdate()
   }
 });
 
 
 
-function listaFilmowUpdate(rodzajeList = ["films", "serials", "wantToSee"]) {
+function listaFilmowUpdate() {
   // chrome.runtime.sendMessage({type: "createRefreshBtn", wczytywanie: true});
   // chrome.tabs.sendMessage({type: "createRefreshBtn", wczytywanie: true});
   chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
     chrome.tabs.sendMessage(tabs[0].id, { type: "createRefreshBtn", wczytywanie: true });
 
     chrome.storage.sync.get(function (sync) {
-      var listsAll = rodzajeList.length;
+      let rodzajeList = [];
+      if (sync.syncFilms) rodzajeList.push('films')
+      if (sync.syncSerials) rodzajeList.push('serials')
+      if (sync.syncWantToSee) rodzajeList.push('wantToSee')
 
-      // chrome.storage.local.get(function (local) {
-      //   console.log('listaFilmowUpdate --------- local')
-      //   console.log(local);
-
-        //  var jsonString= JSON.stringify(obj);
-        let filmwebURL = 'https://www.filmweb.pl/user/' + encodeURIComponent(sync.config.login.split(" ").join("+"));
+        let filmwebURL = 'https://www.filmweb.pl/user/' + encodeURIComponent(sync.login.split(" ").join("+"));
 
         $.each(rodzajeList, function (key, rodzajListy) {
           // console.log(rodzajListy);
@@ -53,21 +49,20 @@ function listaFilmowUpdate(rodzajeList = ["films", "serials", "wantToSee"]) {
             console.log(filmwebURL + '/' + rodzajListy);
             console.log(dataP1);
 
-            // var pagesCount = $(dataP1).find('section[data-pages-count]').data("pages-count");
-            var pagesCount = 1; // TEST
-            console.log('[' + rodzajListy + '] Stron: ' + pagesCount);
+            let pagesCount = $(dataP1).find('section[data-pages-count]').data("pages-count");
+            // let pagesCount = 1; // TEST
             pagesAll += pagesCount;
             ++listsDone;
-
-            // $.extend(true, local, listaFilmowNowyRekord(dataP1, rodzajListy));
-            listaFilmowNowyRekord(dataP1, rodzajListy);
-            // console.log(listaFilmowNowyRekord(dataP1, rodzajListy));
+            
+            console.log('[' + rodzajListy + '] Stron: ' + pagesCount);
             console.log(rodzajListy + ' AJAX Strona: 1/' + pagesCount);
 
-            ++pageNr;
-            chrome.tabs.sendMessage(tabs[0].id, { type: "createRefreshProgress", progress: { listsDone: listsDone, listsAll: listsAll, pageNr: pageNr, pagesAll: pagesAll } });
+            listaFilmowNowyRekord(dataP1, rodzajListy, sync);
 
-            var timeoutVar = 0;
+            ++pageNr;
+            chrome.tabs.sendMessage(tabs[0].id, { type: "createRefreshProgress", progress: { listsDone: listsDone, listsAll: rodzajeList.length, pageNr: pageNr, pagesAll: pagesAll } });
+
+            let timeoutVar = 0;
             for (let pageNR = 2; pageNR <= pagesCount; pageNR++) {
               timeoutVar = Math.ceil(pageNr / 4) * 6;//60;
               timeoutVar = (timeoutVar < 600) ? Math.ceil(pageNr / 4) * 180 : 1000;//60;
@@ -77,16 +72,13 @@ function listaFilmowUpdate(rodzajeList = ["films", "serials", "wantToSee"]) {
                   console.log(filmwebURL + '/' + rodzajListy + '?page=' + pageNR);
                   console.log(dataP2);
 
-                  if (listsDone === listsAll) console.log(rodzajListy + ' AJAX Strona: ' + pageNr + '/' + pagesAll);
+                  if (listsDone === rodzajeList.length) console.log(rodzajListy + ' AJAX Strona: ' + pageNr + '/' + pagesAll);
                   else console.log('[' + rodzajListy + '] AJAX Strona: ' + pageNr + '/ ?');
 
-                  // $.extend(true, local, listaFilmowNowyRekord(dataP2, rodzajListy));
-                  listaFilmowNowyRekord(dataP2, rodzajListy);
-                  // console.log(listaFilmowNowyRekord(dataP1, rodzajListy));
-                  //              listaFilmowNowyRekord(dataP2,rodzajListy);
-                  //            console.log('pageNr: '+pageNr+' | pagesCount: '+pagesCount);
+                  listaFilmowNowyRekord(dataP2, rodzajListy, sync);
+
                   ++pageNr;
-                  chrome.tabs.sendMessage(tabs[0].id, { type: "createRefreshProgress", progress: { listsDone: listsDone, listsAll: listsAll, pageNr: pageNr, pagesAll: pagesAll } });
+                  chrome.tabs.sendMessage(tabs[0].id, { type: "createRefreshProgress", progress: { listsDone: listsDone, listsAll: rodzajeList.length, pageNr: pageNr, pagesAll: pagesAll } });
                 });
               }, timeoutVar);
             }
@@ -101,7 +93,7 @@ function listaFilmowUpdate(rodzajeList = ["films", "serials", "wantToSee"]) {
   });
 }
 
-function listaFilmowNowyRekord(data, rodzajListy) {
+function listaFilmowNowyRekord(data, rodzajListy, sync = {}) {
   // t - title
   // ot - original title
   // a - href (url)
@@ -150,7 +142,8 @@ function listaFilmowNowyRekord(data, rodzajListy) {
       toSave[prefix + idNetflix] = id
       chrome.storage.local.set(toSave)
 
-    } else {
+    } else if (typeof sync.serviceNetflix !== 'undefined' && sync.serviceNetflix) {
+      console.log('-------sdfsdf-sd-fsd-f-sdf-NEWTFLIX');
       getNetflixID(movie, id);
     }
 
@@ -162,8 +155,9 @@ function listaFilmowNowyRekord(data, rodzajListy) {
       toSave[prefix + idHboGo] = id
       chrome.storage.local.set(toSave)
 
-    } else {
-      yfomcGetHbogoID(movie, id);
+    }  else if (typeof sync.serviceHbogo !== 'undefined' && sync.serviceHbogo) {
+      console.log('-------sdfsdf-sd-fsd-f-sdf-');
+      getHbogoID(movie, id);
     }
 
     //    console.log('movie');

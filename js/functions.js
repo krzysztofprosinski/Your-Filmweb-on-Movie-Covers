@@ -4,7 +4,6 @@ function getPrefix(service) {
   else if (service == 'hbogo') return 'h';
 }
 
-
 function removeSpecialChars(data) {
 	// TODO: (optional) PL chars and another to ENG
 	if ( data === undefined) {
@@ -17,7 +16,6 @@ function removeSpecialChars(data) {
 	} else return data.replace("&nbsp;"," ").replace(/[^\w\sĄąĆćĘęŁłŃńÓóŚśŹźŻż]/gi, '').replace(/\s\s+/g, ' ').toLowerCase();
 	
 }
-
 
 function getRandomInt(min, max) {
   min = Math.ceil(min);
