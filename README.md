@@ -4,8 +4,9 @@ Twoje oceny z filmweb.pl na okładkach filmów na serwisach z filmami online (Ne
 ---
 
 TO DO:
-- PILNE! Ban Netflixa na 24h w czacie update'ów
 - Przy update: Sprawdzanie czy jest już taki rekord w local (zaówno id filmweb jak i netflix/hbo).
+- PILNE! Ban na Netflixa na 24h w czasie dużyhc update'ów!
+- Netflix STOP - Ściąganie blokady po np. 25h?
 - Poprawa % progresu update'u (albo wywalenie go z interface'u i wrzucenie do okna pluginu (+ opcje))
 - Poprawa ikony pluginu
 - Strona z filmami "do zobaczenia" na danym serwisie
